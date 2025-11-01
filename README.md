@@ -1,7 +1,9 @@
-
-## AI Automotive Lead Qu<img width="917" height="473" alt="agent" src="https://github.com/user-attachments/assets/0e5981f3-6d3d-479b-90c4-82ac388672fa" />
+Qu<img width="917" height="473" alt="agent" src="https://github.com/user-attachments/assets/0e5981f3-6d3d-479b-90c4-82ac388672fa" />
 alifier  
-**Score leads in seconds. No more guesswork.**
+#### Why you get Zerp score?
+Becuase **tiny AI model** (`llama3.2:1b`) → **fast**, but **not smart enough**
+
+## AI Automotive Lead
 
 ---
 
@@ -94,7 +96,6 @@ Paste a message → click **Qualify Lead** → **boom!**
 | `just browsing` | 1.0 | Nurture email |
 
 ---
-#### Why you get Zerp score?
-Becuase **tiny AI model** (`llama3.2:1b`) → **fast**, but **not smart enough**
+
 
 
