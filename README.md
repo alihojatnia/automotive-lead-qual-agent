@@ -67,7 +67,7 @@ Paste a message → click **Qualify Lead** → **boom!**
 
 - **Flask** – Web server
 - **LangGraph** – AI agent workflow
-- **Ollama** – Runs `llama3.2:3b` locally
+- **Ollama** – Runs `llama3.2:1b` locally
 - **PostgreSQL** – Stores leads
 - **HTML + JS** – Live UI 
 
