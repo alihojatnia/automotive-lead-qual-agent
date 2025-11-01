@@ -1,6 +1,3 @@
-**COPY-PASTE THIS ENTIRE README → `README.md`**
-
-```markdown
 # AI Automotive Lead Qualifier  
 **Score leads in seconds. No more guesswork.**
 
