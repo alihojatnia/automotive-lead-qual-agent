@@ -1,6 +1,6 @@
-Qu<img width="917" height="473" alt="agent" src="https://github.com/user-attachments/assets/0e5981f3-6d3d-479b-90c4-82ac388672fa" />
-alifier  
-#### Why you get Zerp score?
+<img width="917" height="473" alt="agent" src="https://github.com/user-attachments/assets/0e5981f3-6d3d-479b-90c4-82ac388672fa" />
+
+#### Why I got Zore score here?
 Becuase **tiny AI model** (`llama3.2:1b`) → **fast**, but **not smart enough**
 
 ## AI Automotive Lead
