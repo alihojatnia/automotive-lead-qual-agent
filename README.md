@@ -1,4 +1,6 @@
-## AI Automotive Lead Qualifier  
+
+## AI Automotive Lead Qu<img width="917" height="473" alt="agent" src="https://github.com/user-attachments/assets/0e5981f3-6d3d-479b-90c4-82ac388672fa" />
+alifier  
 **Score leads in seconds. No more guesswork.**
 
 ---
