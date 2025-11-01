@@ -1,9 +1,9 @@
-# AI Automotive Lead Qualifier  
+## AI Automotive Lead Qualifier  
 **Score leads in seconds. No more guesswork.**
 
 ---
 
-## What It Does
+### What It Does
 
 You type a customer message like:
 
@@ -21,7 +21,7 @@ It **parses**, **scores**, **saves to DB**, and **shows results live** in a clea
 
 ---
 
-## Features
+### Features
 
 | Feature | Status |
 |--------|--------|
@@ -35,22 +35,22 @@ It **parses**, **scores**, **saves to DB**, and **shows results live** in a clea
 ---
 
 
-## How to Run (3 Steps)
+### How to Run (3 Steps)
 
-### 1. Clone & Enter
+#### 1. Clone & Enter
 ```bash
 git clone https://github.com/yourusername/automotive-lead-qual-agent.git
 cd automotive-lead-qual-agent
 ```
 
-### 2. Install & Start
+#### 2. Install & Start
 ```bash
 pip install -r requirements.txt
 ollama pull llama3.2:1b        # ← Smarter AI recommended
 python app.py
 ```
 
-### 3. Open in Browser
+#### 3. Open in Browser
 ```bash
 open http://localhost:5000
 ```
@@ -59,7 +59,7 @@ Paste a message → click **Qualify Lead** → **boom!**
 
 ---
 
-### Tech Stack
+#### Tech Stack
 
 - **Flask** – Web server
 - **LangGraph** – AI agent workflow
@@ -69,7 +69,7 @@ Paste a message → click **Qualify Lead** → **boom!**
 
 ---
 
-### Project Structure
+#### Project Structure
 
 ```
 .
@@ -83,7 +83,7 @@ Paste a message → click **Qualify Lead** → **boom!**
 
 ---
 
-### Example Outputs
+#### Example Outputs
 
 | Message | Score | Action |
 |--------|-------|--------|
@@ -92,6 +92,7 @@ Paste a message → click **Qualify Lead** → **boom!**
 | `just browsing` | 1.0 | Nurture email |
 
 ---
-
+#### Why you get Zerp score?
+Becuase **tiny AI model** (`llama3.2:1b`) → **fast**, but **not smart enough**
 
 
