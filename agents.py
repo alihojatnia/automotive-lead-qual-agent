@@ -111,6 +111,17 @@ import re
 from database import get_db
 from models import Lead
 
+
+# agents.py — COPY-PASTE THIS ENTIRE FILE
+from typing import TypedDict, Dict, Any
+from langgraph.graph import StateGraph, END
+from langchain_ollama import ChatOllama
+from langchain_core.prompts import ChatPromptTemplate
+import json
+import re
+from database import get_db
+from models import Lead
+
 # LLM
 llm = ChatOllama(model="llama3.2:1b", temperature=0)
 
@@ -129,13 +140,13 @@ class LeadState(TypedDict):
     suggested_action: str
     lead_id: int
 
-# Helper: Extract JSON with regex fallback
+# Helper: Extract JSON from any text
 def extract_json(text: str) -> dict:
+    if not text:
+        return {}
     try:
-        # Try normal JSON
         return json.loads(text)
     except:
-        # Fallback: find first { ... }
         match = re.search(r"\{.*\}", text, re.DOTALL)
         if match:
             try:
@@ -147,8 +158,7 @@ def extract_json(text: str) -> dict:
 # 1. Parser Agent
 def parser_agent(state: LeadState) -> LeadState:
     prompt = ChatPromptTemplate.from_messages([
-        ("system", """You are a lead parser. 
-Return ONLY a JSON object with:
+        ("system", """You are a lead parser. Return ONLY valid JSON with:
 - budget
 - vehicle_type
 - preferences
@@ -158,27 +168,25 @@ Return ONLY a JSON object with:
 Example:
 {{"budget": "under €40k", "vehicle_type": "SUV", "preferences": "electric, family of 4", "timeline": "ASAP", "name_email": "John - john@test.com"}}
 """),
-        ("human", "Parse this message: {message}")
+        ("human", "Parse: {message}")
     ])
     chain = prompt | llm
     try:
         raw = chain.invoke({"message": state["raw_message"]}).content
         parsed = extract_json(raw)
-        print(f"Parsed: {parsed}")
         return {"parsed": parsed or {}}
     except Exception as e:
-        print(f"Parser failed: {e}")
+        print(f"Parser error: {e}")
         return {"parsed": {}}
 
 # 2. Scoring Agent
 def scoring_agent(state: LeadState) -> LeadState:
     inv_str = json.dumps(MOCK_INVENTORY, indent=2)
     prompt = ChatPromptTemplate.from_messages([
-        ("system", """You are a lead scoring expert.
-Return ONLY a JSON object with:
+        ("system", """You are a lead scorer. Return ONLY valid JSON with:
 - score (0.0 to 10.0)
-- reasoning (1 short sentence)
-- suggested_action (1 short action)
+- reasoning (short)
+- suggested_action (short)
 
 Example:
 {{"score": 9.0, "reasoning": "Strong match", "suggested_action": "Schedule test drive"}}
@@ -186,7 +194,7 @@ Example:
 Inventory:
 {inv}
 
-Parsed Lead:
+Lead:
 {parsed}
 """),
         ("human", "Score this lead.")
@@ -197,13 +205,12 @@ Parsed Lead:
         result = extract_json(raw)
         score = float(result.get("score", 0.0))
         action = result.get("suggested_action", "Follow up")
-        print(f"Score: {score}/10 | Action: {action}")
         return {"score": score, "suggested_action": action}
     except Exception as e:
-        print(f"Scoring failed: {e}")
+        print(f"Scoring error: {e}")
         return {"score": 0.0, "suggested_action": "Manual review"}
 
-# 3. Action Agent
+# 3. Save to DB
 def action_agent(state: LeadState) -> LeadState:
     try:
         with get_db() as db:
@@ -216,10 +223,9 @@ def action_agent(state: LeadState) -> LeadState:
             db.add(lead)
             db.commit()
             db.refresh(lead)
-            print(f"Saved Lead ID: {lead.id}")
-        return {"lead_id": lead.id}
+            return {"lead_id": lead.id}
     except Exception as e:
-        print(f"DB Error: {e}")
+        print(f"DB error: {e}")
         return {"lead_id": -1}
 
 # Build Graph
