@@ -2,6 +2,11 @@ from flask import Flask, request, jsonify
 from agents import app as graph_app  # Rename to avoid conflict
 import uuid
 
+from dotenv import load_dotenv
+import uuid
+
+load_dotenv()
+
 app = Flask(__name__)
 
 @app.route("/health", methods=["GET"])
